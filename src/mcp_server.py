@@ -1,3 +1,12 @@
+"""
+mcp_server.py — Exposes Imaginate's pipeline (prompt enhancement + image
+generation) as an MCP tool that any MCP-compatible client (e.g. Claude
+Desktop) can call directly.
+
+Run with: python src/mcp_server.py
+Then point an MCP client's config at this script (see README for the
+Claude Desktop config snippet).
+"""
 
 import base64
 import io
