@@ -15,8 +15,22 @@ load_dotenv()
 MODEL_ID = "stabilityai/stable-diffusion-xl-base-1.0"
 
 
+def get_api_key(key_name: str) -> str:
+    """
+    Reads an API key from Streamlit secrets (used on Streamlit Cloud)
+    if available, otherwise falls back to a local .env file.
+    """
+    try:
+        import streamlit as st
+        if key_name in st.secrets:
+            return st.secrets[key_name]
+    except Exception:
+        pass
+    return os.getenv(key_name)
+
+
 def get_client() -> InferenceClient:
-    return InferenceClient(model=MODEL_ID, token=os.getenv("HF_API_KEY"))
+    return InferenceClient(model=MODEL_ID, token=get_api_key("HF_API_KEY"))
 
 
 def generate_image(prompt: str) -> Image.Image:
